@@ -49,10 +49,10 @@ function _delete(req: Request, res: Response, next: NextFunction): void {
 function createdSchema(req: Request, res: Response, next: NextFunction): void {
     const schema = Joi.object({
         title: Joi.string().required(),
-        firstname: Joi.string().required(),
+        firstName: Joi.string().required(),
         lastName: Joi.string().required(),
         role: Joi.string().valid(Role.Admin, Role.User).default(Role.User),
-        email: Joi.string().required(),
+        email: Joi.string().email().required(),
         password: Joi.string().min(6).required(),
         confirmPassword: Joi.string().valid(Joi.ref("password")).required(),
     })
