@@ -1,5 +1,5 @@
 {
-  "CompilerOptions": {
+  "compilerOptions": {
     "target": "ES2020",
     "module": "commonjs",
     "lib": ["ES2020"],
@@ -7,14 +7,17 @@
     "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "baseUrl": "./src",
+    "ignoreDeprecations": "6.0",
+    "types": ["node"],
     "paths": {
-      "__helpers/*": ["_helpers/*"],
-      "_middlerware/*": ["_middlerware/*"],
-      "users/*": ["_users/*"]
+      "_helpers/*": ["_helpers/*"],
+      "_middleware/*": ["_middleware/*"],
+      "users/*": ["users/*"]
     }
   },
   "include": ["src/**/*"],
