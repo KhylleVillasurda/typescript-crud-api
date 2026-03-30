@@ -30,7 +30,7 @@ function getById(req: Request, res: Response, next: NextFunction): void {
 
 function create(req: Request, res: Response, next: NextFunction): void {
     userService.create(req.body)
-    .then(() => res.json({ message: "User updated"}))
+    .then(() => res.json({ message: "User created"}))
     .catch(next);
 }
 
