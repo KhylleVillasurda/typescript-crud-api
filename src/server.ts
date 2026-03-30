@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 4000;
 initialize()
     .then(() => {
         app.listen(PORT, () => {
-            console.log(`Server running on http on http://localhost:${PORT}`);
+            console.log(`Server running on http://localhost:${PORT}`);
         });
     })
     .catch((err) => {
