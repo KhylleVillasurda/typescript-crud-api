@@ -2,7 +2,7 @@ import type { Request, Response, NextFunction } from "express";
 import { Router } from "express";
 import Joi from "joi";
 import { Role } from "../_helpers/role";
-import { validateRequest } from "../_middlerware/validateRequest";
+import { validateRequest } from "../_middleware/validateRequest";
 import { userService } from "./user.service";
 
 const router = Router();

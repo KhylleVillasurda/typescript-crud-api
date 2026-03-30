@@ -1,6 +1,6 @@
 import express, { Application } from "express";
 import cors from "cors";
-import { errorHandler } from "./_middlerware/errorHandler";
+import { errorHandler } from "./_middleware/errorHandler";
 import { initialize } from "./_helpers/db"
 import usersController from "./users/users.controller";
 
