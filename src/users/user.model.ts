@@ -40,14 +40,13 @@ export default function (sequelize:Sequelize): typeof User {
                 primaryKey: true
             },
             email: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.STRING,
                 allowNull: false,
                 unique: true
             },
             passwordHash: {
                 type: DataTypes.STRING,
-                allowNull: false,
-                unique: true
+                allowNull: false
             },
             title: {
                 type: DataTypes.STRING,
