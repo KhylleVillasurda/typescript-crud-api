@@ -84,7 +84,9 @@ export default function (sequelize:Sequelize): typeof User {
             attributes: { exclude: ["passwordHash"]},
         },
         scopes: {
-            attributes: { include: ["passwordHash"]},
+            withHash: {
+                attributes: { include: ["passwordHash"]},
+            }
         },
       }
     );
