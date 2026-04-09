@@ -15,11 +15,14 @@
     "ignoreDeprecations": "6.0",
     "types": ["node"],
     "paths": {
-      "_helpers/*": ["_helpers/*"],
+      "_helpers/*":    ["_helpers/*"],
       "_middleware/*": ["_middleware/*"],
-      "users/*": ["users/*"]
+      "users/*":       ["users/*"],
+      "employees/*":   ["employees/*"],
+      "departments/*": ["departments/*"],
+      "requests/*":    ["requests/*"]
     }
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist", "src/client"]
 }
