@@ -1,0 +1,205 @@
+:root {
+    --bs-font-sans-serif: 'Titillium Web', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.navbar-brand{
+    font-size: 22px;
+    font-weight: 400;
+    background-color: transparent;
+    border-color: transparent;
+    text-decoration: none;  
+}
+
+.nav-link {
+    color:grey;
+}
+
+.landpage-list {
+    font-size: 20px;
+}
+
+.landpage-box {
+    background-color: #ADD8E6;
+    padding: 10px;
+    border: 1px solid #235e71;
+    border-radius: 15px;
+    display:table;
+}
+
+.landpage-btn {
+    background-color: #66cdaa ;
+    border: 1px solid #008080;
+    border-radius: 10px;
+    display: block;
+    margin-top:10px;
+    padding: 10px 20px;
+    text-decoration: none;
+    display:block;
+}
+
+.landpage-btn:hover {
+    background-color: #008080;
+    color: white;
+    transition-duration: 0.4s;
+}
+
+.default-btn {
+    background-color: #3fea2c ;
+    border: 1px solid #3fea2c;
+    border-radius: 3px;
+    display: block;     
+    padding: 10px 10px;
+    text-decoration: none;
+    display:block;
+}
+
+.default-btn:hover {
+    background-color: #31c47f;
+    border:1px solid #31c47f;
+    color: white;
+    transition-duration: 0.4s ;
+}
+
+.default-second-btn {
+    background-color: white ;
+    border: 1px solid grey;
+    color: grey;
+    border-radius: 3px;
+    display: block;     
+    padding: 10px 10px;
+    text-decoration: none;
+    display:block;
+}
+
+.default-second-btn:hover {
+    background-color: grey;
+    color: white;
+    transition-duration: 0.45s ;
+}
+
+.styled-font-1 {
+    font-family: Ubuntu Mono;
+    color: magenta;
+}
+
+.nav-btn {
+    background-color: transparent;
+    border: transparent;
+    margin: 2px;  
+    color: grey;
+    font-size: 16px;
+}
+.nav-btn:hover {
+    color:#008080;
+    transition-duration :0.45s;
+}
+
+.def-border {
+    border: 1px solid black;
+}
+
+.action-btn-edit {
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-color:#235e71;
+    border-radius: 3px;
+    color:#235e71;
+    padding: 5px;
+}
+
+.action-btn-edit:hover {
+    background-color:#235e71;
+    color:white;
+    transition-duration :0.45s;
+}
+
+.action-btn-delete {
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-color:red;
+    border-radius: 3px;
+    color:red;
+    padding: 5px;
+}
+
+.action-btn-delete:hover {
+    background-color: red;
+    color: white;
+    transition-duration: 0.45s;
+}
+
+.action-btn-resetPass {
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-color:#FFD400;
+    border-radius: 3px;
+    color:#FFD400;
+    padding: 5px;
+}
+
+.action-btn-resetPass:hover {
+    background-color: #FFDD3C;
+    color: darkgrey;
+    transition-duration: 0.45s;
+}
+
+/* ========== FORM INPUT STYLES ========== */
+
+
+
+
+/* ========== VISIBILITY ========== */
+
+.page {
+    display: none;
+}
+.page.active {
+    display: block !important;
+}
+
+/* ADMIN DROPDOWNS */   
+.dropdown-menu {
+    background-color: #343a40;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.dropdown-item {
+    background-color: transparent;
+    border: transparent;
+    margin: 2px;  
+    color: grey;
+    /*padding: 8px 20px;*/
+}
+
+.dropdown-item:hover {
+    background-color: transparent;
+    color: #008080;
+    transition-duration: 0.45s;
+}
+
+.dropdown-divider {
+    border-top-color: rgba(255,255,255,0.1);
+}
+
+#adminDropdown {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* ========== Role-based Visibility ========== */
+body.not-authenticated .role-logged-in {
+    display: none !important;
+}
+
+body.authenticated .role-logged-out {
+    display: none !important;
+}
+
+/* Admin-only elements hidden by default, shown when body has .is-admin */
+.role-admin {
+    display: none !important;
+}
+
+body.is-admin .role-admin {
+    display: block !important;
+}       

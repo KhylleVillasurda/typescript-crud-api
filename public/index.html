@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Full Stack App - Villasurda</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+</head>
+<body class="not-authenticated">
+
+    <!-- ==================== NAVIGATION ==================== -->
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+        <div class="container-fluid">
+            <button class="navbar-brand text-white" onclick="showPage('landing')">
+                Full-Stack App [Villasurda]
+            </button>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarNav">
+                <ul class="navbar-nav d-flex flex-column ms-auto">
+                    <!-- Shown only when NOT logged in -->
+                    <li class="nav-item role-logged-out">
+                        <button class="nav-btn" onclick="showPage('login')">Login</button>
+                    </li>
+                    <li class="nav-item role-logged-out">
+                        <button class="nav-btn" onclick="showPage('register')">Register</button>
+                    </li>
+
+                    <!-- Shown only when logged in -->
+                    <li class="nav-item dropdown role-logged-in">
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown">
+                            <span id="userDropdownName">Admin</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><button class="dropdown-item" onclick="showPage('profile')">Profile</button></li>
+                            <!-- Admin-only items -->
+                            <li class="role-admin"><button class="dropdown-item" onclick="showPage('employees')">Employees</button></li>
+                            <li class="role-admin"><button class="dropdown-item" onclick="showPage('accounts')">Accounts</button></li>
+                            <li class="role-admin"><button class="dropdown-item" onclick="showPage('departments')">Departments</button></li>
+                            <li><button class="dropdown-item" onclick="showPage('requests')">My Requests</button></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><button style="color:tomato;" class="dropdown-item" onclick="logout()">Logout</button></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==================== MAIN APP CONTAINER ==================== -->
+    <div id="app">
+
+        <!-- ==================== LANDING PAGE ==================== -->
+        <div id="landingPage" class="page active">
+            <div class="container mt-5 text-center">
+                <h1 class="fw-bold mb-4">Welcome to Full-Stack App</h1>
+                <h3 class="mb-4">A TypeScript + Express + MySQL backend with a live frontend. Features:</h3>
+                <ul class="list-unstyled landpage-list mb-4">
+                    <li>• Email registration + verification flow</li>
+                    <li>• Login with JWT authentication</li>
+                    <li>• Role-based UI (Admin / User)</li>
+                    <li>• CRUD for Employees, Departments, Requests</li>
+                </ul>
+                <div class="landpage-box mx-auto mb-4" style="max-width: 600px;">
+                    <span class="fw-bold">Default admin: </span>
+                    <span class="styled-font-1">admin@example.com</span>
+                    <span> / </span>
+                    <span class="styled-font-1">admin123</span>
+                </div>
+                <button class="landpage-btn mx-auto" onclick="showPage('register')">Get Started</button>
+            </div>
+        </div>
+
+        <!-- ==================== REGISTER PAGE ==================== -->
+        <div id="registerPage" class="page">
+            <div class="container mt-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card def-border">
+                            <div class="card-header bg-dark text-white">
+                                <h4 class="mb-0">Register Account</h4>
+                            </div>
+                            <div class="card-body">
+                                <form id="registerForm" onsubmit="handleRegister(event)">
+                                    <div class="mb-3">
+                                        <label for="fname" class="form-label">First Name</label>
+                                        <input class="form-control" type="text" id="fname" name="fname" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="lname" class="form-label">Last Name</label>
+                                        <input class="form-control" type="text" id="lname" name="lname" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="regEmail" class="form-label">Email</label>
+                                        <input class="form-control" type="email" id="regEmail" name="email" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="regPassword" class="form-label">Password</label>
+                                        <input class="form-control" type="password" id="regPassword" name="password" minlength="6" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="regConfirmPassword" class="form-label">Confirm Password</label>
+                                        <input class="form-control" type="password" id="regConfirmPassword" name="confirmPassword" minlength="6" required>
+                                    </div>
+                                    <button style="display:inline-block" class="default-btn" type="submit">Sign Up</button>
+                                    <button style="display:inline-block" class="default-second-btn" type="button" onclick="showPage('landing')">Cancel</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== VERIFY EMAIL PAGE ==================== -->
+        <div id="verifyPage" class="page">
+            <div class="container mt-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card def-border">
+                            <div class="card-header bg-dark text-white">
+                                <h4 class="mb-0">Verify Your Email</h4>
+                            </div>
+                            <div class="card-body text-center">
+                                <div class="mb-4">
+                                    <svg width="64" height="64" fill="green" viewBox="0 0 16 16">
+                                        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z"/>
+                                        <path d="M10.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                                    </svg>
+                                </div>
+                                <div class="alert alert-success mb-3">
+                                    A verification link has been sent to <strong id="verifyEmail">your email</strong>.
+                                </div>
+                                <p class="text-muted mb-4">For demo purposes, click below to simulate verification:</p>
+                                <button class="btn btn-success w-100 mb-2" onclick="simulateVerification()">Simulate Email Verification</button>
+                                <button class="btn btn-link" onclick="showPage('login')">Go to Login</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== LOGIN PAGE ==================== -->
+        <div id="loginPage" class="page">
+            <div class="container mt-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card def-border">
+                            <div class="card-header bg-dark text-white">
+                                <h4 class="mb-0">Login</h4>
+                            </div>
+                            <div class="card-body">
+                                <form id="loginForm" onsubmit="handleLogin(event)">
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input class="form-control" type="email" id="email" name="email" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="pwd" class="form-label">Password</label>
+                                        <input class="form-control" type="password" id="pwd" name="pwd" required>
+                                    </div>
+                                    <button style="display:inline-block" class="default-btn" type="submit">Login</button>
+                                    <button style="display:inline-block" class="default-second-btn" type="button" onclick="showPage('landing')">Cancel</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== PROFILE PAGE ==================== -->
+        <div id="profilePage" class="page">
+            <div class="container mt-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="card def-border">
+                            <div class="card-header bg-dark text-white">
+                                <h4 class="mb-0">My Profile</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="role-logged-in">
+                                    <div class="mb-4">
+                                        <h5 id="profileName" class="mb-3">—</h5>
+                                        <p class="mb-2"><strong>Email:</strong> <span id="profileEmail">—</span></p>
+                                        <p class="mb-2"><strong>Role:</strong> <span id="profileRole">—</span></p>
+                                    </div>
+                                    <button class="btn btn-primary" onclick="showToast('Edit Profile feature coming soon!', 'info')">Edit Profile</button>
+                                    <button class="btn btn-secondary ms-2" onclick="showPage('landing')">Back to Home</button>
+                                </div>
+                                <div class="role-logged-out">
+                                    <p class="alert alert-warning">Please login to view your profile.</p>
+                                    <button class="default-btn" onclick="showPage('login')">Go to Login</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EMPLOYEES PAGE ==================== -->
+        <div id="employeesPage" class="page">
+            <div class="container mt-5">
+                <div class="card def-border">
+                    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">Employees</h4>
+                        <button class="btn btn-success btn-sm" onclick="showAddEmployeeForm()">+ Add Employee</button>
+                    </div>
+                    <div class="card-body">
+
+                        <!-- Employee Table -->
+                        <div id="employeeTableContainer">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>User Email</th>
+                                        <th>Position</th>
+                                        <th>Dept</th>
+                                        <th>Hire Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="employeeTableBody">
+                                    <tr>
+                                        <td colspan="6" class="text-center text-muted">No employees.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Add/Edit Employee Form -->
+                        <div id="employeeFormContainer" style="display: none;" class="mt-4">
+                            <h5 id="employeeFormTitle">Add Employee</h5>
+                            <form id="employeeForm" onsubmit="handleEmployeeSave(event)">
+                                <div class="mb-3">
+                                    <label for="empId" class="form-label">Employee ID</label>
+                                    <input type="text" class="form-control" id="empId" readonly placeholder="Auto-assigned">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="empEmail" class="form-label">User Email</label>
+                                    <input type="email" class="form-control" id="empEmail" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="empPosition" class="form-label">Position</label>
+                                    <input type="text" class="form-control" id="empPosition" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="empDept" class="form-label">Department</label>
+                                    <select class="form-control" id="empDept" required>
+                                        <option value="">Select Department</option>
+                                        <option value="Engineering">Engineering</option>
+                                        <option value="HR">HR</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="empHireDate" class="form-label">Hire Date</label>
+                                    <input type="date" class="form-control" id="empHireDate" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="button" class="btn btn-secondary" onclick="hideEmployeeForm()">Cancel</button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== DEPARTMENTS PAGE ==================== -->
+        <div id="departmentsPage" class="page">
+            <div class="container mt-5">
+                <div class="card def-border">
+                    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">Departments</h4>
+                        <button class="btn btn-success btn-sm" onclick="showAddDepartmentForm()">+ Add Department</button>
+                    </div>
+                    <div class="card-body">
+
+                        <!-- Department Table -->
+                        <div id="departmentTableContainer">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="departmentTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Add/Edit Department Form -->
+                        <div id="departmentFormContainer" style="display: none;" class="mt-4">
+                            <h5 id="departmentFormTitle">Add Department</h5>
+                            <form id="departmentForm" onsubmit="handleDepartmentSave(event)">
+                                <div class="mb-3">
+                                    <label for="deptName" class="form-label">Department Name</label>
+                                    <input type="text" class="form-control" id="deptName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="deptDesc" class="form-label">Description</label>
+                                    <textarea class="form-control" id="deptDesc" rows="3" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="button" class="btn btn-secondary" onclick="hideDepartmentForm()">Cancel</button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== ACCOUNTS PAGE ==================== -->
+        <div id="accountsPage" class="page">
+            <div class="container mt-5">
+                <div class="card def-border">
+                    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">Accounts</h4>
+                        <button class="btn btn-success btn-sm" onclick="showAddAccountForm()">+ Add Account</button>
+                    </div>
+                    <div class="card-body">
+
+                        <!-- Accounts Table -->
+                        <div id="accountTableContainer">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Verified</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="accountTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Add/Edit Account Form -->
+                        <div id="accountFormContainer" style="display: none;" class="mt-4">
+                            <h5 id="accountFormTitle">Add Account</h5>
+                            <form id="accountForm" onsubmit="handleAccountSave(event)">
+                                <div class="mb-3">
+                                    <label for="accFirstName" class="form-label">First Name</label>
+                                    <input type="text" class="form-control" id="accFirstName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="accLastName" class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" id="accLastName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="accEmail" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="accEmail" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="accPassword" class="form-label">Password <small class="text-muted">(leave blank to keep current)</small></label>
+                                    <input type="password" class="form-control" id="accPassword" minlength="6">
+                                </div>
+                                <div class="mb-3" id="accConfirmPasswordWrap">
+                                    <label for="accConfirmPassword" class="form-label">Confirm Password</label>
+                                    <input type="password" class="form-control" id="accConfirmPassword" minlength="6">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="accRole" class="form-label">Role</label>
+                                    <select class="form-control" id="accRole" required>
+                                        <option value="User">User</option>
+                                        <option value="Admin">Admin</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="accVerified">
+                                    <label class="form-check-label" for="accVerified">Verified</label>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="button" class="btn btn-secondary" onclick="hideAccountForm()">Cancel</button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== REQUESTS PAGE ==================== -->
+        <div id="requestsPage" class="page">
+            <div class="container mt-5">
+                <div class="card def-border">
+                    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">My Requests</h4>
+                        <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#newRequestModal">+ New Request</button>
+                    </div>
+                    <div class="card-body">
+
+                        <!-- Empty state -->
+                        <div id="requestsContainer">
+                            <p class="text-center text-muted">You have no requests yet.</p>
+                            <div class="text-center">
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newRequestModal">Create One</button>
+                            </div>
+                        </div>
+
+                        <!-- Requests Table -->
+                        <table class="table table-striped mt-4" id="requestsTable" style="display: none;">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Type</th>
+                                    <th>Items</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="requestsTableBody">
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- end #app -->
+
+    <!-- ==================== NEW REQUEST MODAL ==================== -->
+    <div class="modal fade" id="newRequestModal" tabindex="-1" aria-labelledby="newRequestModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newRequestModalLabel">New Request</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="newRequestForm" onsubmit="handleRequestSubmit(event)">
+                        <div class="mb-3">
+                            <label for="requestType" class="form-label">Type</label>
+                            <select class="form-control" id="requestType" required>
+                                <option value="Equipment">Equipment</option>
+                                <option value="Leave">Leave</option>
+                                <option value="Resources">Resources</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Items</label>
+                            <div id="requestItemsContainer">
+                                <div class="input-group mb-2 request-item">
+                                    <input type="text" class="form-control" placeholder="Item name" required>
+                                    <input type="number" class="form-control" placeholder="Qty" value="1" min="1" style="max-width: 80px;" required>
+                                    <button type="button" class="btn btn-danger" onclick="removeRequestItem(this)">x</button>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-secondary mt-1" onclick="addRequestItem()">+ Add Item</button>
+                        </div>
+                        <div class="d-flex justify-content-end gap-2 mt-3">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Submit Request</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Compiled TypeScript client -->
+    <script src="script.js"></script>
+
+</body>
+</html>
