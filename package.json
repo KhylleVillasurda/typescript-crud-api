@@ -1,10 +1,12 @@
 {
   "name": "typescript-crud-api",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "2.0.0",
+  "description": "Full-stack TypeScript app — Express API + compiled TS frontend",
+  "main": "dist/server.js",
   "scripts": {
-    "build": "tsc",
+    "build:server": "tsc -p tsconfig.json",
+    "build:client": "tsc -p tsconfig.client.json",
+    "build": "npm run build:server && npm run build:client",
     "start": "node dist/server.js",
     "start:dev": "nodemon --exec ts-node src/server.ts",
     "test": "ts-node tests/users.test.ts"
